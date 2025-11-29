@@ -6,6 +6,22 @@ spec:
   containers:
     - image: id-generator:0.0.1
       name: id-generator
+      livenessProbe:
+        httpGet:
+          path: /management/health
+          port: 8080
+        initialDelaySeconds: 30
+        timeoutSeconds: 2
+        periodSeconds: 20
+        failureThreshold: 3
+      readinessProbe:
+        httpGet:
+          path: /management/health
+          port: 8080
+        initialDelaySeconds: 15
+        timeoutSeconds: 2
+        periodSeconds: 5
+        failureThreshold: 3
       ports:
       - containerPort: 8080
         name: http
